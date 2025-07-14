@@ -18,6 +18,8 @@ const MovieDetail: FC = () => {
   if (error) return <Typography color="error">{error}</Typography>;
   if (!movie) return <Typography>Фильм не найден</Typography>;
 
+  const genres = movie.genres.map(genre=>genre.name).join(',')
+
   return (
     <Layout>
       <section className='details'>
@@ -34,6 +36,7 @@ const MovieDetail: FC = () => {
             </Typography>
             <Typography>{movie.description}</Typography>
             <Typography>Рейтинг: {movie.rating.imdb}</Typography>
+            <Typography>Жанры: {genres}</Typography>
           </CardContent>
         </Card>
       </section>
