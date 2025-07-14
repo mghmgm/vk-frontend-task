@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import type { IMovie } from '../../src/shared/types/types';
-import { Card, CardContent, CardMedia, Link, Typography } from '@mui/material';
+import { Button, Card, CardActions, CardContent, CardMedia, Link, Typography } from '@mui/material';
 
 interface MovieCardProps {
   movie: IMovie;
@@ -20,6 +20,9 @@ const MovieCard: FC<MovieCardProps> = ({ movie }) => {
           <Typography>{movie.name || movie.alternativeName} ({movie.year})</Typography>
           <Typography>Рейтинг: {movie.rating.imdb}</Typography>
         </CardContent>
+        <CardActions>
+          <Button onClick={}>В избранное</Button>
+        </CardActions>
       </Card>
     </Link>
   );
