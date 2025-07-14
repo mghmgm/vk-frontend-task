@@ -8,7 +8,7 @@ interface MovieCardProps {
 
 const MovieCard: FC<MovieCardProps> = ({ movie }) => {
   return (
-    <Link href={}>
+    <Link href={`/movies/${movie.id}`}>
       <Card sx={{ width: 945 }}>
         <CardMedia
           component="img"

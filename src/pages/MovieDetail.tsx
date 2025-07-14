@@ -1,16 +1,44 @@
-import type { FC } from "react";
-import type { IMovie } from "../shared/types/types";
+import type { FC } from 'react';
+import { Card, CardContent, CardMedia, CircularProgress, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { useFetch } from '../hooks/useFetch';
+import { MovieAPI } from '../shared/api/MovieAPI';
+import Layout from './Layout';
 
-interface MovieCardProps {
-  movie: IMovie;
-}
+const MovieDetail: FC = () => {
+  const { id } = useParams<{ id: string }>();
 
-const MovieDetail: FC<MovieCardProps> = ({movie}) => {
+  const {
+    data: movie,
+    loading,
+    error,
+  } = useFetch(() => MovieAPI.getMovieById(id!).then((res) => res.data), [id]);
+
+  if (loading) return <CircularProgress />;
+  if (error) return <Typography color="error">{error}</Typography>;
+  if (!movie) return <Typography>Фильм не найден</Typography>;
+
   return (
-    <section>
-      
-    </section>
-  )
-}
+    <Layout>
+      <section className='details'>
+        <Card sx={{ width: 945 }}>
+          <CardMedia
+            component="img"
+            height="240"
+            image={movie.poster?.url}
+            sx={{ objectFit: 'cover' }}
+          />
+          <CardContent>
+            <Typography>
+              {movie.name || movie.alternativeName} ({movie.year})
+            </Typography>
+            <Typography>{movie.description}</Typography>
+            <Typography>Рейтинг: {movie.rating.imdb}</Typography>
+          </CardContent>
+        </Card>
+      </section>
+    </Layout>
+  );
+};
 
-export default MovieDetail
+export default MovieDetail;
